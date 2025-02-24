@@ -18,6 +18,6 @@ public class PartTimeTeacher extends Teacher {
 
     @Override
     public double calculateSalary() {
-        return (this.getBaseSalary() / 30 / 5 / 8) * this.getActiveHours();
+        return Math.round((this.getBaseSalary() / 30 / 5 / 8) * this.getActiveHours() * 4);
     }
 }
