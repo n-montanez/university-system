@@ -121,6 +121,7 @@ public class Runner {
 
         System.out.print("Enter student age: ");
         int age = scanner.nextInt();
+        scanner.nextLine();
 
         String studentId = generateUniqueId(university);
 
@@ -130,6 +131,38 @@ public class Runner {
         System.out.println("--------------------------");
         System.out.println("Student added successfully");
         System.out.println("--------------------------");
+
+        System.out.print("Do you want to add student to an existing class? Y/N: ");
+        String option = scanner.nextLine();
+
+        if (!option.equals("Y") || !option.equals("y")) {
+            return;
+        }
+
+        addStudentToCourse(university, newStudent, scanner);
+    }
+
+    private static void addStudentToCourse(University university, Student student, Scanner scanner) {
+        listCourses(university);
+
+        List<Course> courses = university.getCourses();
+        System.out.print("Enter class number to add student to: ");
+        int selection = scanner.nextInt();
+
+        if (selection == -1)
+            return;
+
+        if (selection < 0 || selection > courses.size() + 1) {
+            System.out.println("--------------");
+            System.out.println("INVALID OPTION");
+            System.out.println("--------------");
+        }
+
+        courses.get(selection - 1).enrollStudent(student);
+
+        System.out.println("----------------");
+        System.out.println("STUDENT ENROLLED");
+        System.out.println("----------------");
     }
 
     private static String generateUniqueId(University university) {

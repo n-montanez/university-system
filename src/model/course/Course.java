@@ -52,4 +52,8 @@ public class Course {
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
     }
+
+    public void enrollStudent(Student student) {
+        this.studentList.add(student);
+    }
 }
