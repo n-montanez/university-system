@@ -1,6 +1,8 @@
 import java.util.List;
 import java.util.Scanner;
 
+import model.course.Course;
+import model.student.Student;
 import model.teacher.Teacher;
 import model.university.University;
 import utils.Initializer;
@@ -20,6 +22,7 @@ public class Runner {
 
             System.out.print("Enter option: ");
             int option = scanner.nextInt();
+            scanner.nextLine();
 
             switch (option) {
                 case 1:
@@ -35,7 +38,7 @@ public class Runner {
                     addCourse(university);
                     break;
                 case 5:
-                    studentDetails(university);
+                    studentDetails(university, scanner);
                     break;
                 case 6:
                     System.out.println("---------------------");
@@ -60,6 +63,7 @@ public class Runner {
         int counter = 1;
         for (Teacher t : teachers) {
             System.out.println(counter + ". " + t.getName() + ": $" + t.calculateSalary());
+            counter++;
         }
         System.out.println("--------------------------");
         return;
@@ -77,8 +81,53 @@ public class Runner {
 
     }
 
-    private static void studentDetails(University university) {
+    private static void studentDetails(University university, Scanner scanner) {
+        listStudents(university);
+        System.out.print("Enter student ID: ");
+        String studentId = scanner.nextLine();
 
+        Student found = null;
+        for (Student s : university.getStudents()) {
+            if (s.getId().equals(studentId)) {
+                found = s;
+                break;
+            }
+        }
+
+        if (found == null) {
+            System.out.println("----------");
+            System.out.println("INVALID ID");
+            System.out.println("----------");
+        }
+
+        System.out.println("Student: " + found.getId() + " - " + found.getName());
+        System.out.println("Courses enrolled: ");
+
+        for (Course c : university.getCourses()) {
+            for (Student s : c.getStudentList()) {
+                if (s.getId().equals(found.getId())) {
+                    System.out.println(c.getName() + " - " + c.getClassroom());
+                }
+            }
+        }
+        System.out.println("-----------------------");
+        return;
+    }
+
+    private static void listStudents(University university) {
+        List<Student> students = university.getStudents();
+
+        System.out.println("-------- STUDENTS --------");
+        for (Student s : students) {
+            System.out.println(
+                    s.getId() + ". " +
+                            s.getName() + " - " +
+                            s.getAge() + " y/o."
+
+            );
+        }
+        System.out.println("--------------------------");
+        return;
     }
 
     private static void printMenu() {
