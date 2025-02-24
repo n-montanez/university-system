@@ -29,7 +29,7 @@ public class Runner {
                     listTeachers(university);
                     break;
                 case 2:
-                    listCourses(university);
+                    listCourses(university, scanner);
                     break;
                 case 3:
                     addStudent(university);
@@ -69,8 +69,45 @@ public class Runner {
         return;
     }
 
-    private static void listCourses(University university) {
+    private static void listCourses(University university, Scanner scanner) {
+        List<Course> courses = university.getCourses();
 
+        System.out.println("-------- COURSES --------");
+        int counter = 1;
+        for (Course c : courses) {
+            System.out.println(
+                    counter + ". " +
+                            c.getName() + " - " +
+                            c.getClassroom());
+            counter++;
+        }
+        System.out.println("-------------------------");
+
+        System.out.print("Enter class number to see its details (-1 to go back): ");
+        int selection = scanner.nextInt();
+
+        if (selection == -1)
+            return;
+
+        if (selection < 0 || selection > courses.size() + 1) {
+            System.out.println("--------------");
+            System.out.println("INVALID OPTION");
+            System.out.println("--------------");
+        }
+
+        Course selectedCourse = courses.get(selection - 1);
+        System.out.println("Class " + selectedCourse.getName() + " - " + selectedCourse.getClassroom());
+        System.out.println("Teacher: " + selectedCourse.getTeacher().getName());
+        System.out.println("Students: ");
+        for (Student s : selectedCourse.getStudentList()) {
+            System.out.println(
+                    s.getId() + ". " +
+                            s.getName() + " - " +
+                            s.getAge() + " y/o."
+
+            );
+        }
+        System.out.println("---------------------------");
     }
 
     private static void addStudent(University university) {
