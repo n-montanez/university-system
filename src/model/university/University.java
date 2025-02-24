@@ -53,4 +53,8 @@ public class University {
     public void setCourses(List<Course> courses) {
         this.courses = courses;
     }
+
+    public void addStudent(Student student) {
+        this.students.add(student);
+    }
 }

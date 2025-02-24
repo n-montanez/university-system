@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 import model.course.Course;
@@ -32,7 +33,7 @@ public class Runner {
                     listCourses(university, scanner);
                     break;
                 case 3:
-                    addStudent(university);
+                    addStudent(university, scanner);
                     break;
                 case 4:
                     addCourse(university);
@@ -110,8 +111,29 @@ public class Runner {
         System.out.println("---------------------------");
     }
 
-    private static void addStudent(University university) {
+    private static void addStudent(University university, Scanner scanner) {
+        System.out.println("------- NEW STUDENT -------");
+        System.out.print("Enter student name: ");
+        String name = scanner.nextLine();
 
+        System.out.print("Enter student age: ");
+        int age = scanner.nextInt();
+
+        String studentId = generateUniqueId(university);
+
+        Student newStudent = new Student(studentId, name, age);
+        university.addStudent(newStudent);
+
+        System.out.println("--------------------------");
+        System.out.println("Student added successfully");
+        System.out.println("--------------------------");
+    }
+
+    private static String generateUniqueId(University university) {
+        Random random = new Random();
+        String studentId;
+        studentId = String.format("%06d", random.nextInt(1000000));
+        return studentId;
     }
 
     private static void addCourse(University university) {
@@ -135,6 +157,7 @@ public class Runner {
             System.out.println("----------");
             System.out.println("INVALID ID");
             System.out.println("----------");
+            return;
         }
 
         System.out.println("Student: " + found.getId() + " - " + found.getName());
