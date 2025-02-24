@@ -20,19 +20,19 @@ public class Runner {
 
             switch (option) {
                 case 1:
-                    // List teachers
+                    listTeachers(university);
                     break;
                 case 2:
-                    // List courses
+                    listCourses(university);
                     break;
                 case 3:
-                    // New student
+                    addStudent(university);
                     break;
                 case 4:
-                    // New course
+                    addCourse(university);
                     break;
                 case 5:
-                    // List student details
+                    studentDetails(university);
                     break;
                 case 6:
                     System.out.println("---------------------");
@@ -48,6 +48,26 @@ public class Runner {
             }
 
         } while (true);
+    }
+
+    private static void listTeachers(University university) {
+
+    }
+
+    private static void listCourses(University university) {
+
+    }
+
+    private static void addStudent(University university) {
+
+    }
+
+    private static void addCourse(University university) {
+
+    }
+
+    private static void studentDetails(University university) {
+
     }
 
     private static void printMenu() {
