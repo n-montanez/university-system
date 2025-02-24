@@ -1,4 +1,7 @@
+import java.util.List;
 import java.util.Scanner;
+
+import model.teacher.Teacher;
 import model.university.University;
 import utils.Initializer;
 
@@ -51,7 +54,15 @@ public class Runner {
     }
 
     private static void listTeachers(University university) {
+        List<Teacher> teachers = university.getTeachers();
 
+        System.out.println("-------- TEACHERS --------");
+        int counter = 1;
+        for (Teacher t : teachers) {
+            System.out.println(counter + ". " + t.getName() + ": $" + t.calculateSalary());
+        }
+        System.out.println("--------------------------");
+        return;
     }
 
     private static void listCourses(University university) {
