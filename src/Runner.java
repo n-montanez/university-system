@@ -30,7 +30,7 @@ public class Runner {
                     listTeachers(university);
                     break;
                 case 2:
-                    listCourses(university, scanner);
+                    courseDetails(university, scanner);
                     break;
                 case 3:
                     addStudent(university, scanner);
@@ -70,20 +70,9 @@ public class Runner {
         return;
     }
 
-    private static void listCourses(University university, Scanner scanner) {
+    private static void courseDetails(University university, Scanner scanner) {
+        listCourses(university);
         List<Course> courses = university.getCourses();
-
-        System.out.println("-------- COURSES --------");
-        int counter = 1;
-        for (Course c : courses) {
-            System.out.println(
-                    counter + ". " +
-                            c.getName() + " - " +
-                            c.getClassroom());
-            counter++;
-        }
-        System.out.println("-------------------------");
-
         System.out.print("Enter class number to see its details (-1 to go back): ");
         int selection = scanner.nextInt();
 
@@ -109,6 +98,20 @@ public class Runner {
             );
         }
         System.out.println("---------------------------");
+    }
+
+    private static void listCourses(University university) {
+        List<Course> courses = university.getCourses();
+        System.out.println("-------- COURSES --------");
+        int counter = 1;
+        for (Course c : courses) {
+            System.out.println(
+                    counter + ". " +
+                            c.getName() + " - " +
+                            c.getClassroom());
+            counter++;
+        }
+        System.out.println("-------------------------");
     }
 
     private static void addStudent(University university, Scanner scanner) {
