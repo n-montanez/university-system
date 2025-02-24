@@ -21,8 +21,8 @@ public class Initializer {
 
     private static List<Teacher> initializeTeachers() {
         List<Teacher> teachers = new ArrayList<>();
-        teachers.add(new FullTimeTeacher("John Locke", 2800));
-        teachers.add(new FullTimeTeacher("Virginia Wolf", 3200));
+        teachers.add(new FullTimeTeacher("John Locke", 2800, 5));
+        teachers.add(new FullTimeTeacher("Virginia Wolf", 3200, 2));
 
         teachers.add(new PartTimeTeacher("Immanuel Kant", 2000, 16));
         teachers.add(new PartTimeTeacher("Jane Austen", 2100, 20));
