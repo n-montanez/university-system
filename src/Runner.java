@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
@@ -36,7 +37,7 @@ public class Runner {
                     addStudent(university, scanner);
                     break;
                 case 4:
-                    addCourse(university);
+                    addCourse(university, scanner);
                     break;
                 case 5:
                     studentDetails(university, scanner);
@@ -172,8 +173,55 @@ public class Runner {
         return studentId;
     }
 
-    private static void addCourse(University university) {
+    private static void addCourse(University university, Scanner scanner) {
+        System.out.println("------- NEW COURSE -------");
 
+        System.out.print("Enter class name: ");
+        String className = scanner.nextLine();
+
+        System.out.print("Enter class room: ");
+        String classRoom = scanner.nextLine();
+
+        listTeachers(university);
+        System.out.print("Enter teacher number: ");
+        int teacherIndex = scanner.nextInt();
+
+        if (teacherIndex < 1 || teacherIndex > university.getTeachers().size()) {
+            System.out.println("Invalid teacher selection.");
+            return;
+        }
+
+        Teacher selectedTeacher = university.getTeachers().get(teacherIndex - 1);
+
+        listStudents(university);
+        System.out.print("Enter students id to add (-1 to finish): ");
+
+        List<Student> selectedStudents = new ArrayList<>();
+        while (true) {
+            String studentId = scanner.nextLine();
+
+            if (studentId.equals("-1")) {
+                break;
+            }
+
+            Student foundStudent = null;
+            for (Student student : university.getStudents()) {
+                if (student.getId().equals(studentId)) {
+                    foundStudent = student;
+                    break;
+                }
+            }
+
+            if (foundStudent != null) {
+                selectedStudents.add(foundStudent);
+                System.out.println("Added student: " + foundStudent.getName());
+            } else {
+                System.out.println("Invalid student ID: " + studentId);
+            }
+        }
+
+        Course newCourse = new Course(className, classRoom, selectedStudents, selectedTeacher);
+        university.addCourse(newCourse);
     }
 
     private static void studentDetails(University university, Scanner scanner) {
