@@ -43,10 +43,11 @@ public class Initializer {
 
     private static List<Course> initializeCourses(List<Teacher> teachers, List<Student> students) {
         List<Course> courses = new ArrayList<>();
-        courses.add(new Course("Literature 101", "Room A", students.subList(0, 3), teachers.get(0)));
-        courses.add(new Course("Philosophy 201", "Room B", students.subList(1, 4), teachers.get(2)));
-        courses.add(new Course("Creative Writing", "Room C", students.subList(2, 5), teachers.get(1)));
-        courses.add(new Course("Modern Literature", "Room D", students.subList(0, 4), teachers.get(3)));
+        courses.add(new Course("Literature 101", "Room A", new ArrayList<>(students.subList(0, 3)), teachers.get(0)));
+        courses.add(new Course("Philosophy 201", "Room B", new ArrayList<>(students.subList(1, 4)), teachers.get(2)));
+        courses.add(new Course("Creative Writing", "Room C", new ArrayList<>(students.subList(2, 5)), teachers.get(1)));
+        courses.add(
+                new Course("Modern Literature", "Room D", new ArrayList<>(students.subList(0, 4)), teachers.get(3)));
         return courses;
     }
 }
