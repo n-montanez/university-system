@@ -24,18 +24,21 @@ public class Runner {
                     UniversityManager.listTeachers(university);
                     break;
                 case 2:
-                    UniversityManager.courseDetails(university, scanner);
+                    UniversityManager.addTeacher(university, scanner);
                     break;
                 case 3:
-                    UniversityManager.addStudent(university, scanner);
+                    UniversityManager.courseDetails(university, scanner);
                     break;
                 case 4:
-                    UniversityManager.addCourse(university, scanner);
+                    UniversityManager.addStudent(university, scanner);
                     break;
                 case 5:
-                    UniversityManager.studentDetails(university, scanner);
+                    UniversityManager.addCourse(university, scanner);
                     break;
                 case 6:
+                    UniversityManager.studentDetails(university, scanner);
+                    break;
+                case 7:
                     System.out.println("---------------------");
                     System.out.println("Quitting... Thank you");
                     System.out.println("---------------------");
@@ -54,10 +57,11 @@ public class Runner {
         System.out.println("-----------------");
         System.out.println("Menu:");
         System.out.println("1. See available teachers");
-        System.out.println("2. See all offered courses");
-        System.out.println("3. Enroll new student");
-        System.out.println("4. Create a new course");
-        System.out.println("5. See student information");
-        System.out.println("6. Exit");
+        System.out.println("2. Add a new teacher");
+        System.out.println("3. See all offered courses");
+        System.out.println("4. Enroll new student");
+        System.out.println("5. Create a new course");
+        System.out.println("6. See student information");
+        System.out.println("7. Exit");
     }
 }
