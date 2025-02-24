@@ -15,11 +15,12 @@ The current state of the application supports:
 - 📚 Create students and courses
 - 🧑‍🎓 Enroll students to courses
 - 📃 View students detailed info
+- 👨‍🏫 Create teachers
 
 ### In development
-- 👨‍🏫 Create teachers
-- 🌟 Graphical User Interface
-- 💻 Database integration
+- [x] 👨‍🏫 Create teachers *(Not yet in release)*
+- [ ] 🌟 Graphical User Interface
+- [ ] 💻 Database Integration
 
 ## Running the application
 
@@ -36,6 +37,8 @@ Open the project in your IDE and run the main class encountered in:
 ```bash
 src/Runner.java
 ```
+***Warning:** This will give you the most update version of the program which might not be stable.*
+
 ### Using the release
 
 Go to [release page](https://github.com/n-montanez/university-system/releases) on GitHub, and download the latest published release.
