@@ -36,7 +36,7 @@ public class Initializer {
         students.add(new Student("205701", "Lewis Carroll", 24));
         students.add(new Student("205802", "J. K. Rowling", 20));
         students.add(new Student("204806", "Louisa May Alcott", 26));
-        students.add(new Student("204806", "Isabel Allende", 25));
+        students.add(new Student("204807", "Isabel Allende", 25));
 
         return students;
     }
