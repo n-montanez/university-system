@@ -12,19 +12,17 @@ import utils.Initializer;
 public class Runner {
     public static void main(String[] args) {
         University university = Initializer.initializeUniversity();
-
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("--------------------------------------------");
         System.out.println("Welcome to The " + university.getName());
         System.out.println("--------------------------------------------");
 
-        do {
+        while (true) {
             printMenu();
 
             System.out.print("Enter option: ");
-            int option = scanner.nextInt();
-            scanner.nextLine();
+            int option = getValidIntegerInput(scanner);
 
             switch (option) {
                 case 1:
@@ -47,15 +45,24 @@ public class Runner {
                     System.out.println("Quitting... Thank you");
                     System.out.println("---------------------");
                     scanner.close();
-                    System.exit(0);
+                    return;
                 default:
                     System.out.println("--------------");
                     System.out.println("Invalid option");
                     System.out.println("--------------");
                     break;
             }
+        }
+    }
 
-        } while (true);
+    private static int getValidIntegerInput(Scanner scanner) {
+        while (true) {
+            try {
+                return Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.print("Invalid input. Please enter a number: ");
+            }
+        }
     }
 
     private static void listTeachers(University university) {
@@ -68,22 +75,22 @@ public class Runner {
             counter++;
         }
         System.out.println("--------------------------");
-        return;
     }
 
     private static void courseDetails(University university, Scanner scanner) {
         listCourses(university);
         List<Course> courses = university.getCourses();
         System.out.print("Enter class number to see its details (-1 to go back): ");
-        int selection = scanner.nextInt();
+        int selection = getValidIntegerInput(scanner);
 
         if (selection == -1)
             return;
 
-        if (selection < 0 || selection > courses.size() + 1) {
-            System.out.println("--------------");
-            System.out.println("INVALID OPTION");
-            System.out.println("--------------");
+        while (selection < 1 || selection > courses.size()) {
+            System.out.print("Invalid option. Please enter a valid class number: ");
+            selection = getValidIntegerInput(scanner);
+            if (selection == -1)
+                return;
         }
 
         Course selectedCourse = courses.get(selection - 1);
@@ -91,12 +98,7 @@ public class Runner {
         System.out.println("Teacher: " + selectedCourse.getTeacher().getName());
         System.out.println("Students: ");
         for (Student s : selectedCourse.getStudentList()) {
-            System.out.println(
-                    s.getId() + ". " +
-                            s.getName() + " - " +
-                            s.getAge() + " y/o."
-
-            );
+            System.out.println(s.getId() + ". " + s.getName() + " - " + s.getAge() + " y/o.");
         }
         System.out.println("---------------------------");
     }
@@ -106,10 +108,7 @@ public class Runner {
         System.out.println("-------- COURSES --------");
         int counter = 1;
         for (Course c : courses) {
-            System.out.println(
-                    counter + ". " +
-                            c.getName() + " - " +
-                            c.getClassroom());
+            System.out.println(counter + ". " + c.getName() + " - " + c.getClassroom());
             counter++;
         }
         System.out.println("-------------------------");
@@ -121,8 +120,7 @@ public class Runner {
         String name = scanner.nextLine();
 
         System.out.print("Enter student age: ");
-        int age = scanner.nextInt();
-        scanner.nextLine();
+        int age = getValidIntegerInput(scanner);
 
         String studentId = generateUniqueId(university);
 
@@ -136,11 +134,9 @@ public class Runner {
         System.out.print("Do you want to add student to an existing class? Y/N: ");
         String option = scanner.nextLine();
 
-        if (!option.equals("Y") || !option.equals("y")) {
-            return;
+        if (option.equalsIgnoreCase("Y")) {
+            addStudentToCourse(university, newStudent, scanner);
         }
-
-        addStudentToCourse(university, newStudent, scanner);
     }
 
     private static void addStudentToCourse(University university, Student student, Scanner scanner) {
@@ -148,15 +144,11 @@ public class Runner {
 
         List<Course> courses = university.getCourses();
         System.out.print("Enter class number to add student to: ");
-        int selection = scanner.nextInt();
+        int selection = getValidIntegerInput(scanner);
 
-        if (selection == -1)
-            return;
-
-        if (selection < 0 || selection > courses.size() + 1) {
-            System.out.println("--------------");
-            System.out.println("INVALID OPTION");
-            System.out.println("--------------");
+        while (selection < 1 || selection > courses.size()) {
+            System.out.print("Invalid option. Please enter a valid class number: ");
+            selection = getValidIntegerInput(scanner);
         }
 
         courses.get(selection - 1).enrollStudent(student);
@@ -179,22 +171,22 @@ public class Runner {
         System.out.print("Enter class name: ");
         String className = scanner.nextLine();
 
-        System.out.print("Enter class room: ");
+        System.out.print("Enter classroom: ");
         String classRoom = scanner.nextLine();
 
         listTeachers(university);
         System.out.print("Enter teacher number: ");
-        int teacherIndex = scanner.nextInt();
+        int teacherIndex = getValidIntegerInput(scanner);
 
-        if (teacherIndex < 1 || teacherIndex > university.getTeachers().size()) {
-            System.out.println("Invalid teacher selection.");
-            return;
+        while (teacherIndex < 1 || teacherIndex > university.getTeachers().size()) {
+            System.out.print("Invalid teacher selection. Please enter a valid teacher number: ");
+            teacherIndex = getValidIntegerInput(scanner);
         }
 
         Teacher selectedTeacher = university.getTeachers().get(teacherIndex - 1);
 
         listStudents(university);
-        System.out.print("Enter students id to add (-1 to finish): ");
+        System.out.print("Enter student IDs to add (-1 to finish): ");
 
         List<Student> selectedStudents = new ArrayList<>();
         while (true) {
@@ -222,6 +214,7 @@ public class Runner {
 
         Course newCourse = new Course(className, classRoom, selectedStudents, selectedTeacher);
         university.addCourse(newCourse);
+        System.out.println("Course added successfully.");
     }
 
     private static void studentDetails(University university, Scanner scanner) {
@@ -246,7 +239,6 @@ public class Runner {
 
         System.out.println("Student: " + found.getId() + " - " + found.getName());
         System.out.println("Courses enrolled: ");
-
         for (Course c : university.getCourses()) {
             for (Student s : c.getStudentList()) {
                 if (s.getId().equals(found.getId())) {
@@ -255,7 +247,6 @@ public class Runner {
             }
         }
         System.out.println("-----------------------");
-        return;
     }
 
     private static void listStudents(University university) {
@@ -263,15 +254,9 @@ public class Runner {
 
         System.out.println("-------- STUDENTS --------");
         for (Student s : students) {
-            System.out.println(
-                    s.getId() + ". " +
-                            s.getName() + " - " +
-                            s.getAge() + " y/o."
-
-            );
+            System.out.println(s.getId() + ". " + s.getName() + " - " + s.getAge() + " y/o.");
         }
         System.out.println("--------------------------");
-        return;
     }
 
     private static void printMenu() {
