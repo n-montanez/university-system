@@ -7,6 +7,8 @@ import java.util.Scanner;
 
 import model.course.Course;
 import model.student.Student;
+import model.teacher.FullTimeTeacher;
+import model.teacher.PartTimeTeacher;
 import model.teacher.Teacher;
 import model.university.University;
 
@@ -21,6 +23,38 @@ public class UniversityManager {
             counter++;
         }
         System.out.println("--------------------------");
+    }
+
+    public static void addTeacher(University university, Scanner scanner) {
+        System.out.println("------- NEW TEACHER -------");
+        System.out.print("Enter teacher name: ");
+        String name = scanner.nextLine();
+
+        System.out.print("Enter base salary: ");
+        int salary = InputValidator.getValidIntegerInput(scanner);
+
+        int option;
+        do {
+            System.out.print("Is this a Full Time (1) or Part Time (2) teacher: ");
+            option = InputValidator.getValidIntegerInput(scanner);
+            if (option != 1 && option != 2) {
+                System.out.println("-------------");
+                System.out.println("Invalid input");
+                System.out.println("-------------");
+            }
+        } while (option != 1 && option != 2);
+
+        if (option == 1) {
+            System.out.print("Enter experience years: ");
+            int years = InputValidator.getValidIntegerInput(scanner);
+            FullTimeTeacher teacher = new FullTimeTeacher(name, salary, years);
+            university.addTeacher(teacher);
+        } else {
+            System.out.print("Enter weekly active hours: ");
+            int hours = InputValidator.getValidIntegerInput(scanner);
+            PartTimeTeacher teacher = new PartTimeTeacher(name, salary, hours);
+            university.addTeacher(teacher);
+        }
     }
 
     public static void courseDetails(University university, Scanner scanner) {

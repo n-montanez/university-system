@@ -61,4 +61,8 @@ public class University {
     public void addCourse(Course course) {
         this.courses.add(course);
     }
+
+    public void addTeacher(Teacher teacher) {
+        this.teachers.add(teacher);
+    }
 }
